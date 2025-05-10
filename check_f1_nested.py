@@ -70,28 +70,26 @@ def count_metrics(filename):
     inner_micro_f1 = f1_score(inner_scores_tp, inner_scores_fp, inner_scores_fn)
     outer_micro_f1 = f1_score(outer_scores_tp, outer_scores_fp, outer_scores_fn)
 
-    # full_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
-    #         zip([s[0] for s in full_scores], [s[1] for s in full_scores], [s[2] for s in full_scores])
-    #     ]
-    # inner_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
-    #         zip([s[0] for s in inner_scores], [s[1] for s in inner_scores], [s[2] for s in inner_scores])
-    #     ]
-    # outer_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
-    #         zip([s[0] for s in outer_scores], [s[1] for s in outer_scores], [s[2] for s in outer_scores])
-    #     ]
+    full_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
+            zip([s[0] for s in full_scores], [s[1] for s in full_scores], [s[2] for s in full_scores])
+        ]
+    inner_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
+            zip([s[0] for s in inner_scores], [s[1] for s in inner_scores], [s[2] for s in inner_scores])
+        ]
+    outer_f1_scores = [f1_score(tp, fp, fn) for tp, fp, fn in 
+            zip([s[0] for s in outer_scores], [s[1] for s in outer_scores], [s[2] for s in outer_scores])
+        ]
 
     # print(full_f1_scores)
 
-    # full_macro_f1 = sum(full_f1_scores) / len(full_f1_scores)
-    # inner_macro_f1 = sum(inner_f1_scores) / len(inner_f1_scores)
-    # outer_macro_f1 = sum(outer_f1_scores) / len(outer_f1_scores)
-
-    full_f1_scores = [[full] for tag in tags]
+    full_macro_f1 = sum(full_f1_scores) / len(full_f1_scores)
+    inner_macro_f1 = sum(inner_f1_scores) / len(inner_f1_scores)
+    outer_macro_f1 = sum(outer_f1_scores) / len(outer_f1_scores)
 
     return full_macro_f1, full_micro_f1, inner_macro_f1, inner_micro_f1, outer_macro_f1, outer_micro_f1
 
 
-for root, dirs, files in os.walk("./exports"):
+for root, dirs, files in os.walk("./preds"):
     for file in files:
         fma, fmi, ima, imi, oma, omi = count_metrics(os.path.join(root, file))
         print("======================")
