@@ -64,4 +64,4 @@ Processed RuTermEval data for all approaches in Binder format can be found in `p
 
 ## Contacts
 
-For any inquires you can reach out to our email: fulstocky@gmail.com.
+For any inquires you can reach out to fulstocky@gmail.com.
