@@ -126,20 +126,16 @@ for d_idx, data in enumerate(tqdm(train_data)):
     # print(lemm_entities)
 
     for e_idx, e in enumerate(lemm_entities):
-        if any(["орфографический" in s in s for s in e[4]]) and any(["словарь" in s in s for s in e[4]]):
-            print(e)
         entities_with_this_inclusion = [v for v in lemm_entities if (v[1] < e[0] or e[1] < v[0]) \
             and e[4].issubset(v[4]) and e[4] != v[4]]
         if len(entities_with_this_inclusion) > 0:
-            if any(["орфографический" in s in s for s in e[4]]) and any(["словарь" in s in s for s in e[4]]):
-                print("ewti", entities_with_this_inclusion)
             inclusion_spans.add("||".join(sorted(list(e[4]))))
             inclusion_span_types["||".join(sorted(list(e[4])))] = e[5]
     
     inclusions = []    
     for inclusion_span in inclusion_spans:
         inclusion_span = set(inclusion_span.split('||'))
-        print(inclusion_span)
+        # print(inclusion_span)
         probable_inclusions = []
         for w1_idx, word1 in enumerate(morphed_words):
             for w2_idx, word2 in enumerate(morphed_words):
@@ -147,9 +143,6 @@ for d_idx, data in enumerate(tqdm(train_data)):
                 # print(inclusion_span)
                 # print(word_span_set)
                 if inclusion_span.issubset(word_span_set):
-                    if any(["словарь" in s in s for s in inclusion_span]):
-                        print(inclusion_span)
-                        print(word_span_set)
                     probable_inclusions.append((morphed_words[w1_idx][1], morphed_words[w2_idx][2], w1_idx, w2_idx))
         # print(inclusion_span)
         # print(morphed_words)
@@ -157,10 +150,6 @@ for d_idx, data in enumerate(tqdm(train_data)):
             for o in outermost_entities:
                 if (o[0] < p[0] and p[1] <= o[1]) or (o[0] <= p[0] and p[1] < o[1]):
                     inclusions.append((p[0], p[1], inclusion_span_types["||".join(sorted(list(inclusion_span)))]))
-                    if "орфограф" in txtdata[p[0] : p[1]]:
-                        print(txtdata[p[0] : p[1]])
-                        print(p)
-                        exit(1)
                     if inclusion_span_types["||".join(sorted(list(inclusion_span)))] in inclusions_by_type.keys():
                         inclusions_by_type[inclusion_span_types["||".join(sorted(list(inclusion_span)))]] += 1
                     else:
