@@ -40,16 +40,18 @@ Train and development subsets can be downloaded through links above (see Partici
 
 All scripts were run on Python 3.10.11. You can find needed packages at `requirements.txt` and install them via `pip install -r requirements.txt`.
 
-### Baselines
+### Nested Term Recognition from Flat Supervision Approaches
+
+#### Baselines
 
 - `prepare_dataset.py`: convert RuTermEval format from Codalab to Binder format. This data corresponds to *full nested learning* approach described in our paper.
 - `prepare_flat_dataset.py`: same as `prepare_dataset.py`, but only outermost flat data is preserved. Corresponds to *pure flat learning* approach.  
-### Non-damage approaches
+#### Non-damage approaches
 
 - `prepare_winc_dataset.py`: *simple inclusions* approach.
 - `prepare_lemwinc_dataset.py`: *lemmatized inclusions* approach.
 - `prepare_lemwincdamage_dataset.py`: *lemmatized inclusions* fused with *damaged cross-prediction approach* (both *early* and *late*). Damaged cross-predicted data should be prepared before running this script, see details below.
-### Damaged cross-prediction approaches 
+#### Damaged cross-prediction approaches 
 
 *Damaged cross-prediction* approaches can be found in `damage/early` and `damage/late` respectively. 
 
@@ -57,6 +59,12 @@ Both directories have same logical structure. They should be run in the followin
 1. `damage_data.py`: script to damage data (train for early, development and test for late);
 2. `data4cross_predict.py`: script to prepare damaged data for cross-prediction. Obtained data can be used for subtraining;
 3. `convert_and_merge.py`: fuse resulting predictions with flat data for final training.
+
+### Other
+
+Two other scripts are provided:
+- `convert_for_submission.py`: convert Binder predictions to Codalab format for evaluation;
+- `check_f1_nested.py`: calculate F1 inner, outer and overall metrics over macro- and micro-average scores.
 
 ## Processed data
 
